@@ -58,9 +58,17 @@ export default function PokeDolar() {
  }
 
  const formatCurrency = (value: string) => {
-   return Number(value).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+   const numValue = parseFloat(value);
+   const truncatedValue = Math.floor(numValue * 100) / 100;
+   
+   return truncatedValue.toLocaleString("pt-BR", { 
+     style: "currency", 
+     currency: "BRL",
+     minimumFractionDigits: 2,
+     maximumFractionDigits: 2
+   })
  }
-  
+
  const getTypeColor = (type: string) => {
    const colors: { [key: string]: string } = {
      normal: 'bg-gray-400',
