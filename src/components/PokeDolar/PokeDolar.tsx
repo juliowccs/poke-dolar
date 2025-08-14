@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import Image from 'next/image';
 import { CircleDollarSign, Sun, Moon } from 'lucide-react';
+import ThemeSwitcher from '../ui/theme-switcher';
  
  const getUSD_BRL = async (): Promise<Usdbrl> => {
    const response = await priceApi.get("/last/USD-BRL");
@@ -22,10 +23,6 @@ export default function PokeDolar() {
  const dolarPriceInt = usdBrl?.bid ? parseInt(usdBrl.bid.replace('.', '').substring(0, 3)) : 1
 
  const { data: pokemon, isLoading: isLoadingPokemon, error: errorPokemon } = useQuery({queryKey: ['pokemon', dolarPriceInt], queryFn: () => getPokemonById(dolarPriceInt)})
-
- const toggleTheme = () => {
-   document.documentElement.classList.toggle('dark')
- }
 
  const typeTranslations: { [key: string]: string } = {
    normal: 'Normal',
@@ -132,15 +129,7 @@ export default function PokeDolar() {
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 p-4 transition-colors duration-300">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center py-8 relative">
-          <button
-            onClick={toggleTheme}
-            className="absolute top-4 right-4 p-3 rounded-full bg-white hover:bg-gray-50 text-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-yellow-400 shadow-lg transition-all duration-300 hover:scale-105"
-            aria-label="Alternar tema"
-          >
-            <Sun className="h-6 w-6 dark:hidden" />
-            <Moon className="h-6 w-6 hidden dark:block" />
-          </button>
-          
+          <ThemeSwitcher />
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-2">
             PokéDólar
           </h1>
